@@ -92,7 +92,7 @@ public class RegionDao {
 		return i;
 	}
 
-	public int transactionExample(int id) throws SQLException {
+	public void transactionExample(int id) throws SQLException {
 		connection.setAutoCommit(false);
 		String sql = "UPDATE REGIONS SET REGION_NAME = ? WHERE REGION_ID = ?";
 
@@ -111,7 +111,6 @@ public class RegionDao {
 		} catch (SQLException throwables) {
 			connection.rollback();
 		}
-
 	}
 
 }
