@@ -14,17 +14,36 @@ public class RegionDao {
 		this.connection = connection;
 	}
 
-	public List<Region> getAll() throws SQLException {
-		PreparedStatement preparedStatement = connection.prepareStatement("SELECT REGION_ID, REGION_NAME FROM REGIONS");
-		ResultSet resultSet = preparedStatement.executeQuery();
-
+	public List<Region> getAll() {
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
 		List<Region> regions = new ArrayList<>();
+		try {
+			preparedStatement = connection.prepareStatement("SELECT REGION_ID, REGION_NAME FROM REGIONS");
+			resultSet = preparedStatement.executeQuery();
 
-		while (resultSet.next()) {
-			String regionName = resultSet.getString("REGION_NAME");
-			int regionId = resultSet.getInt("REGION_ID");
-			Region region = new Region(regionId, regionName);
-			regions.add(region);
+			while (resultSet.next()) {
+				String regionName = resultSet.getString("REGION_NAME");
+				int regionId = resultSet.getInt("REGION_ID");
+				Region region = new Region(regionId, regionName);
+				regions.add(region);
+			}
+		} catch (SQLException throwables) {
+			throwables.printStackTrace();
+			if (preparedStatement != null) {
+				try {
+					preparedStatement.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if (resultSet != null) {
+				try {
+					resultSet.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		return regions;
 	}
