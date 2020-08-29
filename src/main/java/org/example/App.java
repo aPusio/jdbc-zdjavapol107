@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class App
 {
@@ -16,8 +17,11 @@ public class App
         Connection connection = connectionManager.getConnection();
 
         RegionDao regionDao = new RegionDao(connection);
-        List<Region> regions = regionDao.getAll();
-        regions.forEach(System.out::println);
+//        List<Region> regions = regionDao.getAll();
+//        regions.forEach(System.out::println);
+
+        Optional<Region> region = regionDao.get(2);
+        region.ifPresent(System.out::println);
 
         connection.close();
     }

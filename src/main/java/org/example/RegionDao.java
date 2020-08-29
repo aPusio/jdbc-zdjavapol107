@@ -6,6 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
+import javax.swing.text.html.Option;
 
 public class RegionDao {
 	private Connection connection;
@@ -46,5 +49,19 @@ public class RegionDao {
 			}
 		}
 		return regions;
+	}
+
+	public Optional<Region> get(int id) throws SQLException {
+		String sql = "SELECT REGION_ID, REGION_NAME FROM REGIONS WHERE REGION_ID = ?";
+		PreparedStatement preparedStatement = connection.prepareStatement(sql);
+		preparedStatement.setInt(1, id);
+		ResultSet resultSet = preparedStatement.executeQuery();
+		Region region = null;
+		if (resultSet.next()) {
+			int regionId = resultSet.getInt("REGION_ID");
+			String regionName = resultSet.getString("REGION_NAME");
+			region = new Region(regionId, regionName);
+		}
+		return Optional.ofNullable(region);
 	}
 }
