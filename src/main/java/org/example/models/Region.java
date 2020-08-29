@@ -1,4 +1,4 @@
-package org.example;
+package org.example.models;
 
 public class Region {
 	private int id;
@@ -6,6 +6,10 @@ public class Region {
 
 	public Region(int id, String regionName) {
 		this.id = id;
+		this.regionName = regionName;
+	}
+
+	public Region(String regionName) {
 		this.regionName = regionName;
 	}
 
