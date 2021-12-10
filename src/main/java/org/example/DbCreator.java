@@ -22,12 +22,6 @@ public class DbCreator {
 
 		System.out.println("Attempting to create contacts DB ... ");
 
-//		try {
-//			Class.forName("org.hsqldb.jdbc.JDBCDriver");
-//		} catch (ClassNotFoundException e) {
-//			throw e;
-//		}
-
 		try {
 			con = DriverManager.getConnection(connectionString, "admin123", "admin123");
 
@@ -43,8 +37,7 @@ public class DbCreator {
 
 	public static String readToString(String fname) throws Exception {
 		File file = new File(fname);
-		String string = FileUtils.readFileToString(file, "utf-8");
-		return string;
+		return FileUtils.readFileToString(file, "utf-8");
 	}
 	
 	
