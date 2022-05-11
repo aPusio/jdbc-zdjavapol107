@@ -11,18 +11,35 @@ public class App
         ConnectionManager connectionManager = new ConnectionManager();
         Connection connection = connectionManager.getConnection();
 
+        printRegionOne(connection);
+        printItalia(connection);
+
+        connection.close();
+    }
+
+    private static void printItalia(Connection connection) throws SQLException {
+        PreparedStatement preparedStatement = connection.prepareStatement(
+                "SELECT country_id, country_name, region_id FROM countries WHERE country_id = ?");
+        preparedStatement.setString(1, "IT");
+        ResultSet resultSet = preparedStatement.executeQuery();
+        if(resultSet.next()){
+            System.out.println(resultSet.getString("country_id"));
+            System.out.println(resultSet.getString("country_name"));
+            System.out.println(resultSet.getInt("region_id"));
+        }
+        preparedStatement.close();
+    }
+
+    private static void printRegionOne(Connection connection) throws SQLException {
         PreparedStatement regionsStatement = connection.prepareStatement(
                 "SELECT region_id, region_name FROM regions WHERE region_id = ?");
         regionsStatement.setInt(1, 1);
         ResultSet resultSet = regionsStatement.executeQuery();
         if(resultSet.next()) {
-            resultSet.getInt("region_id");
-            resultSet.getString("region_name");
+            System.out.println(resultSet.getInt("region_id"));
+            System.out.println(resultSet.getString("region_name"));
         }
         regionsStatement.close();
-
-
-        connection.close();
     }
 
     public static void examples(Connection connection) throws SQLException {
