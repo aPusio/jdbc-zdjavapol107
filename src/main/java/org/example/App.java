@@ -27,6 +27,12 @@ public class App
         regionDao.delete(10);
         regionDao.getAll().forEach(System.out::println);
 
+        System.out.println("BEFORE: " + regionDao.getRegionById(1));
+        RegionEntity regionById = regionDao.getRegionById(1);
+        regionById.setRegionName("EUROPAAAAAAAAAA");
+        regionDao.update(regionById);
+        System.out.println("UPDATED: " + regionDao.getRegionById(1));
+
         connection.close();
     }
 

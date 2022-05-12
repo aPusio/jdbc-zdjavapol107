@@ -24,7 +24,7 @@ public class RegionDao {
                 "SELECT region_id, region_name FROM regions WHERE region_id = ?");
         regionsStatement.setInt(1, id);
         ResultSet resultSet = regionsStatement.executeQuery();
-        if(resultSet.next()) {
+        if (resultSet.next()) {
             RegionEntity regionEntity = new RegionEntity(
                     resultSet.getInt("region_id"),
                     resultSet.getString("region_name"));
@@ -42,7 +42,7 @@ public class RegionDao {
                 "SELECT region_id, region_name FROM regions");
         ResultSet resultSet = preparedStatement.executeQuery();
         List<RegionEntity> regions = new ArrayList<>();
-        while (resultSet.next()){
+        while (resultSet.next()) {
             RegionEntity regionEntity = new RegionEntity(
                     resultSet.getInt("region_id"),
                     resultSet.getString("region_name")
@@ -65,6 +65,15 @@ public class RegionDao {
         PreparedStatement preparedStatement = connection.prepareStatement(
                 "DELETE FROM regions WHERE region_id = ?");
         preparedStatement.setInt(1, id);
+        preparedStatement.executeUpdate();
+        preparedStatement.close();
+    }
+
+    public void update(RegionEntity regionEntity) throws SQLException {
+        PreparedStatement preparedStatement = connection.prepareStatement(
+                "UPDATE regions SET region_name = ? WHERE region_id = ?");
+        preparedStatement.setString(1, regionEntity.getRegionName());
+        preparedStatement.setInt(2, regionEntity.getRegionId());
         preparedStatement.executeUpdate();
         preparedStatement.close();
     }
