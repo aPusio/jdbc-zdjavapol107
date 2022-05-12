@@ -18,6 +18,7 @@ public class App
 
         System.out.println(regionDao.getRegionById(2));
         System.out.println(countryDao.getById("IT"));
+        regionDao.getAll().forEach(System.out::println);
 
         connection.close();
     }

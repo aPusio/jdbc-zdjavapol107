@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 //DAO - Data Access Object
@@ -36,7 +37,19 @@ public class RegionDao {
         return null;
     }
 
-    public List<RegionEntity> getAll(){
-        return null;
+    public List<RegionEntity> getAll() throws SQLException {
+        PreparedStatement preparedStatement = connection.prepareStatement(
+                "SELECT region_id, region_name FROM regions");
+        ResultSet resultSet = preparedStatement.executeQuery();
+        List<RegionEntity> regions = new ArrayList<>();
+        while (resultSet.next()){
+            RegionEntity regionEntity = new RegionEntity(
+                    resultSet.getInt("region_id"),
+                    resultSet.getString("region_name")
+            );
+            regions.add(regionEntity);
+        }
+        preparedStatement.close();
+        return regions;
     }
 }
