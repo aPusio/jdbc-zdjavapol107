@@ -24,6 +24,8 @@ public class App
         regionDao.save(new RegionEntity("Europa Centralna"));
         regionDao.getAll().forEach(System.out::println);
 
+        regionDao.delete(10);
+        regionDao.getAll().forEach(System.out::println);
 
         connection.close();
     }

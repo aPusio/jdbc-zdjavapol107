@@ -60,4 +60,12 @@ public class RegionDao {
         preparedStatement.executeUpdate();
         preparedStatement.close();
     }
+
+    public void delete(Integer id) throws SQLException {
+        PreparedStatement preparedStatement = connection.prepareStatement(
+                "DELETE FROM regions WHERE region_id = ?");
+        preparedStatement.setInt(1, id);
+        preparedStatement.executeUpdate();
+        preparedStatement.close();
+    }
 }
