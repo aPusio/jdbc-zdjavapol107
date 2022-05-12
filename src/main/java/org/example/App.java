@@ -1,5 +1,8 @@
 package org.example;
 
+import org.example.dao.CountryDao;
+import org.example.dao.RegionDao;
+
 import java.sql.*;
 
 public class App
@@ -10,9 +13,11 @@ public class App
 
         ConnectionManager connectionManager = new ConnectionManager();
         Connection connection = connectionManager.getConnection();
+        RegionDao regionDao = new RegionDao(connection);
+        CountryDao countryDao = new CountryDao(connection);
 
-        printRegionOne(connection);
-        printItalia(connection);
+        System.out.println(regionDao.getRegionById(2));
+        System.out.println(countryDao.getById("IT"));
 
         connection.close();
     }
@@ -69,5 +74,4 @@ public class App
         correctPreparedStatement.execute();
         correctPreparedStatement.close();
     }
-
 }
