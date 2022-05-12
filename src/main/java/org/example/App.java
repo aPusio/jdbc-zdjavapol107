@@ -33,6 +33,9 @@ public class App
         regionDao.update(regionById);
         System.out.println("UPDATED: " + regionDao.getRegionById(1));
 
+        regionDao.deleteTwo(13,14, null);
+        regionDao.getAll().forEach(System.out::println);
+
         connection.close();
     }
 

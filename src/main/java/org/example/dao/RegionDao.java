@@ -77,4 +77,19 @@ public class RegionDao {
         preparedStatement.executeUpdate();
         preparedStatement.close();
     }
+
+    public void deleteTwo(Integer id1, Integer id2, String dummy) throws SQLException {
+        try {
+            connection.setAutoCommit(false);
+            delete(id1);
+            //dodane zeby wyrzucic wyjatek
+            dummy.split("");
+            delete(id2);
+            connection.commit();
+        } catch (NullPointerException e){
+            System.out.println("ROLLBACK!!!!");
+            connection.rollback();
+        }
+        connection.setAutoCommit(true);
+    }
 }
