@@ -52,4 +52,12 @@ public class RegionDao {
         preparedStatement.close();
         return regions;
     }
+
+    public void save(RegionEntity region) throws SQLException {
+        PreparedStatement preparedStatement = connection.prepareStatement(
+                "INSERT INTO regions ( region_name ) VALUES (?)");
+        preparedStatement.setString(1, region.getRegionName());
+        preparedStatement.executeUpdate();
+        preparedStatement.close();
+    }
 }

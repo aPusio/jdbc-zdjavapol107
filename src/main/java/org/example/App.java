@@ -2,6 +2,7 @@ package org.example;
 
 import org.example.dao.CountryDao;
 import org.example.dao.RegionDao;
+import org.example.model.RegionEntity;
 
 import java.sql.*;
 
@@ -19,6 +20,10 @@ public class App
         System.out.println(regionDao.getRegionById(2));
         System.out.println(countryDao.getById("IT"));
         regionDao.getAll().forEach(System.out::println);
+
+        regionDao.save(new RegionEntity("Europa Centralna"));
+        regionDao.getAll().forEach(System.out::println);
+
 
         connection.close();
     }

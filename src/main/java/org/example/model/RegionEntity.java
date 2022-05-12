@@ -10,6 +10,10 @@ public class RegionEntity {
         this.regionName = regionName;
     }
 
+    public RegionEntity(String regionName) {
+        this.regionName = regionName;
+    }
+
     public Integer getRegionId() {
         return regionId;
     }
