@@ -70,7 +70,8 @@ public class RegionDao {
     }
 
     public void update(RegionEntity regionEntity) throws SQLException {
-        PreparedStatement preparedStatement = connection.prepareStatement(
+        PreparedStatement preparedStatement = null;
+        preparedStatement = connection.prepareStatement(
                 "UPDATE regions SET region_name = ? WHERE region_id = ?");
         preparedStatement.setString(1, regionEntity.getRegionName());
         preparedStatement.setInt(2, regionEntity.getRegionId());
@@ -91,5 +92,28 @@ public class RegionDao {
             connection.rollback();
         }
         connection.setAutoCommit(true);
+    }
+
+    public void deleteTwoTryCatch(Integer id1, Integer id2, String dummy) {
+        try {
+            connection.setAutoCommit(false);
+            delete(id1);
+            //dodane zeby wyrzucic wyjatek
+            dummy.split("");
+            delete(id2);
+            connection.commit();
+        } catch (NullPointerException | SQLException e) {
+            System.out.println("ROLLBACK!!!!");
+            try {
+                connection.rollback();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+        try {
+            connection.setAutoCommit(true);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
